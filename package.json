@@ -1,0 +1,21 @@
+{
+  "name": "esbuild-gas-plugin",
+  "version": "0.1.0",
+  "description": "esbuild plugin for Google Apps Script.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/mahaker/esbuild-gas-plugin",
+  "homepage": "https://github.com/mahaker/esbuild-gas-plugin",
+  "keywords": [
+    "esbuild",
+    "apps-script",
+    "google-apps-script"
+  ],
+  "author": "Hideaki Matsunami <carbon0409@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gas-entry-generator": "^2.1.0"
+  }
+}
