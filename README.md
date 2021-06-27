@@ -16,6 +16,8 @@ yarn add -D esbuild-gas-plugin
 
 Add this to Your build script file, and paste `dist/bundle.js` to script editor.
 
+A simple example can be found in [here](https://github.com/mahaker/esbuild-tutorial).
+
 ```javascript
 const { GasPlugin } = require('esbuild-gas-plugin'); // Add
 
