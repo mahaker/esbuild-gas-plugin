@@ -26,5 +26,5 @@ require('esbuild').build({
   bundle: true,
   outfile: 'dist/bundle.js',
   plugins: [GasPlugin]         // Add
-}).catch(() => process.exit(1)
+}).catch(() => process.exit(1))
 ```
