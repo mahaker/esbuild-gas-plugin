@@ -4,16 +4,23 @@ import { generate } from "https://esm.sh/gas-entry-generator@2.1.0";
 
 export default {
   name: "gas-plugin",
-  setup(build: PluginBuild) {
-    build.onEnd(async () => {
-      if (build.initialOptions.outfile == undefined) {
-        throw Error('"outfile" must be string, not undefined.');
+  setup({ onEnd, initialOptions }: PluginBuild) {
+    onEnd(async ({ outputFiles }) => {
+      let code = undefined;
+      if (initialOptions.outfile !== undefined) {
+        code = await Deno.readTextFile(initialOptions.outfile);
+      } else {
+        code = outputFiles?.[0].text;
       }
-      const outfile = await Deno.readTextFile(build.initialOptions.outfile);
-      const gas = generate(outfile, { comment: true });
+      if (code === undefined) {
+        throw Error(
+          "Neither an output file nor output text is found.",
+        );
+      }
+      const gas = generate(code, { comment: true });
       await Deno.writeTextFile(
-        build.initialOptions.outfile,
-        `let global = this;\n${gas.entryPointFunctions}\n${outfile}`,
+        code,
+        `let global = this;\n${gas.entryPointFunctions}\n${code}`,
       );
     });
   },
