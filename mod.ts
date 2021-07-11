@@ -6,6 +6,9 @@ export default {
   name: "gas-plugin",
   setup(build: PluginBuild) {
     build.onEnd(async () => {
+      if (build.initialOptions.outfile == undefined) {
+        throw Error('"outfile" must be string, not undefined.');
+      }
       const outfile = await Deno.readTextFile(build.initialOptions.outfile);
       const gas = generate(outfile, { comment: true });
       await Deno.writeTextFile(
