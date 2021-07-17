@@ -11,7 +11,7 @@ test('declare global functions', async t => {
   const outfilePath = 'dist/bundle.js'
 
   await esbuild.build({
-    entryPoints: ['src/main.ts'],
+    entryPoints: ['../fixtures/main.ts'],
     bundle: true,
     logLevel: 'info',
     outfile: outfilePath,
@@ -26,7 +26,7 @@ function main1() {
 function main2() {
 }
 (() => {
-  // src/util.ts
+  // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
   var sub = (n1, n2) => n1 - n2;
   var util_default = {
@@ -34,7 +34,7 @@ function main2() {
     sub
   };
 
-  // src/main.ts
+  // ../fixtures/main.ts
   var greet = (name) => {
     console.log("Hello " + name);
   };
