@@ -1,0 +1,16 @@
+{
+  "name": "test-node",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0"
+  },
+  "ava": {
+    "files": [
+      "test.js"
+    ]
+  }
+}
