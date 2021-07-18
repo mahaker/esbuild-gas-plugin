@@ -1,5 +1,6 @@
 # esbuild-gas-plugin
 
+[![npm version](https://badge.fury.io/js/esbuild-gas-plugin.svg)](https://www.npmjs.com/package/esbuild-gas-plugin)
 ![test](https://github.com/mahaker/esbuild-gas-plugin/actions/workflows/test.yml/badge.svg)
 
 esbuild plugin for Google Apps Script.
