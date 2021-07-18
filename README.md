@@ -1,5 +1,7 @@
 # esbuild-gas-plugin
 
+![test](https://github.com/mahaker/esbuild-gas-plugin/actions/workflows/test.yml/badge.svg)
+
 esbuild plugin for Google Apps Script.
 
 This is inspired by [gas-webpack-plugin](https://github.com/fossamagna/gas-webpack-plugin).
