@@ -1,6 +1,8 @@
-const GasPlugin = {
+import type { Plugin, PluginBuild } from 'esbuild'
+
+const GasPlugin: Plugin = {
   name: 'gas-plugin',
-  setup(build) {
+  setup(build: PluginBuild) {
     const fs = require('fs')
     const { generate } = require('gas-entry-generator')
 

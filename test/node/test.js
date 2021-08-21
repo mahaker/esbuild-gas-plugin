@@ -1,7 +1,7 @@
 const test = require('ava');
 const fs = require('fs')
 const esbuild = require('esbuild')
-const { GasPlugin } = require('../../');
+const { GasPlugin } = require('../../dist');
 
 test.beforeEach(() => {
   fs.rmdirSync('./dist', { recursive: true })
