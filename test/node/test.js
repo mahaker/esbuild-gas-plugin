@@ -13,9 +13,7 @@ test('declare global functions', async t => {
   await esbuild.build({
     entryPoints: ['../fixtures/main.ts'],
     bundle: true,
-    logLevel: 'info',
     outfile: outfilePath,
-    target: ['node14'],
     plugins: [GasPlugin]
   })
 
