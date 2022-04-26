@@ -1,6 +1,6 @@
 import type { Plugin, PluginBuild } from 'esbuild'
 
-const GasPlugin: Plugin = {
+export const GasPlugin: Plugin = {
   name: 'gas-plugin',
   setup(build: PluginBuild) {
     const fs = require('fs')
