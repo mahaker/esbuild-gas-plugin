@@ -14,4 +14,4 @@ const GasPlugin: Plugin = {
   }
 }
 
-exports.GasPlugin = GasPlugin
+export = { GasPlugin }
