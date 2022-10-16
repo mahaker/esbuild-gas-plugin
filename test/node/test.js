@@ -23,6 +23,7 @@ function main1() {
 }
 function main2() {
 }
+"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
