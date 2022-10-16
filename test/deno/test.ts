@@ -1,4 +1,4 @@
-import { build, stop } from 'https://deno.land/x/esbuild@v0.12.15/mod.js'
+import { build, stop } from 'https://deno.land/x/esbuild@v0.15.11/mod.js'
 import GasPlugin from '../../mod.ts'
 import httpFetch from 'https://deno.land/x/esbuild_plugin_http_fetch@v1.0.2/index.js'
 import { assertStringIncludes, assertEquals } from "https://deno.land/std@0.101.0/testing/asserts.ts";
@@ -23,6 +23,7 @@ function main1() {
 }
 function main2() {
 }
+"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
@@ -67,7 +68,7 @@ Deno.test('Throws error if "outfile" is not defined', async () => {
       plugins: [httpFetch, GasPlugin ]
     }) 
   } catch(e) {
-      assertStringIncludes(e.message, '"outfile" is required. Note that "write: false" is not available.')
+    assertStringIncludes(e.message, '"outfile" is required. Note that "write: false" is not available.')
   } finally {
     stop()
   }
