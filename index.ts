@@ -55,7 +55,7 @@ const GasPlugin: Plugin = {
         fs.writeFileSync(esbuildOptions.outfile, 'var global = this;' + '\n' + gas.entryPointFunctions + '\n' + code)
       } else {
         const bannerDeleted = await deleteBanner(code, jsBanner)
-        fs.writeFileSync(esbuildOptions.outfile, jsBanner + 'var global = this;' + '\n' + gas.entryPointFunctions + bannerDeleted)
+        fs.writeFileSync(esbuildOptions.outfile, jsBanner + '\n' + 'var global = this;' + '\n' + gas.entryPointFunctions + bannerDeleted)
       }
     })
   }

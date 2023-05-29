@@ -76,6 +76,7 @@ test('declare global functions. banner#js is defined', async t => {
  * This is banner
  * This is banner
  */
+
 var global = this;
 function main1() {
 }
