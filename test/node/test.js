@@ -7,6 +7,7 @@ test('declare global functions. banner#js is not defined', async t => {
   const outfilePath = 'dist/test1.js'
 
   await esbuild.build({
+    target: 'ES2020',
     entryPoints: ['../fixtures/main.ts'],
     bundle: true,
     outfile: outfilePath,
@@ -56,6 +57,7 @@ test('declare global functions. banner#js is defined', async t => {
   const outfilePath = 'dist/test2.js'
 
   await esbuild.build({
+    target: 'ES2020',
     entryPoints: ['../fixtures/main.ts'],
     bundle: true,
     outfile: outfilePath,

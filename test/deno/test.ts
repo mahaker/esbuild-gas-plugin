@@ -1,4 +1,4 @@
-import { build, stop } from 'https://deno.land/x/esbuild@v0.15.11/mod.js'
+import { build, stop } from 'https://deno.land/x/esbuild@v0.18.4/mod.js'
 import GasPlugin from '../../mod.ts'
 import httpFetch from 'https://deno.land/x/esbuild_plugin_http_fetch@v1.0.2/index.js'
 import { assertStringIncludes, assertEquals } from "https://deno.land/std@0.101.0/testing/asserts.ts";
@@ -6,6 +6,7 @@ import { assertStringIncludes, assertEquals } from "https://deno.land/std@0.101.
 Deno.test('declare global functions. banner#js is not defined', async () => {
   const outfilePath = './dist/test1.js'
   await build({
+      target: 'ES2020',
       entryPoints: ['../fixtures/main.ts'],
       bundle: true,
       outfile: outfilePath,
@@ -55,6 +56,7 @@ function main2() {
 Deno.test('declare global functions. banner#js is defined', async () => {
   const outfilePath = './dist/test2.js'
   await build({
+      target: 'ES2020',
       entryPoints: ['../fixtures/main.ts'],
       bundle: true,
       outfile: outfilePath,
@@ -118,6 +120,7 @@ Deno.test('Throws error if "outfile" is not defined', async () => {
   // TODO: Use assertThrows or assertThrowsAsync instead of try-catch
   try {
     await build({
+      target: 'ES2020',
       entryPoints: ['../fixtures/main.ts'],
       logLevel: 'silent', // To hide build error message.
       bundle: true,

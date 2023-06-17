@@ -1,4 +1,4 @@
-import type { PluginBuild } from "https://deno.land/x/esbuild@v0.15.11/mod.d.ts";
+import type { PluginBuild } from "https://deno.land/x/esbuild@v0.18.4/mod.d.ts";
 import { StringReader, readLines } from "https://deno.land/std@0.190.0/io/mod.ts";
 // @deno-types="./generate.d.ts"
 import { generate } from "https://esm.sh/gas-entry-generator@2.1.0";
