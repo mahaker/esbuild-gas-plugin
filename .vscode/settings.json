@@ -1,4 +1,4 @@
 {
   "deno.enable": true,
-  "deno.enablePaths": ["mod.ts", "test/deno"]
+  "deno.enablePaths": ["mod.ts", "build.ts", "test/deno"]
 }

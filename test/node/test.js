@@ -1,7 +1,7 @@
 const test = require('ava');
 const fs = require('fs')
 const esbuild = require('esbuild')
-const { GasPlugin } = require('../../dist');
+const { GasPlugin } = require('../../npm');
 
 test('declare global functions. banner#js is not defined', async t => {
   const outfilePath = 'dist/test1.js'
@@ -15,12 +15,11 @@ test('declare global functions. banner#js is not defined', async t => {
   })
 
   const outfile = fs.readFileSync(outfilePath, { encoding: 'utf8' })
-  const expected = `var global = this;
+  const expected = `let global = this;
 function main1() {
 }
 function main2() {
 }
-"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
@@ -79,12 +78,11 @@ test('declare global functions. banner#js is defined', async t => {
  * This is banner
  */
 
-var global = this;
+let global = this;
 function main1() {
 }
 function main2() {
 }
-"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
