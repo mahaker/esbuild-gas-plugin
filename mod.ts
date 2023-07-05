@@ -27,7 +27,7 @@ async function deleteBanner(code: string, banner: string) {
   return _code
 }
 
-export default {
+export const GasPlugin = {
   name: "gas-plugin",
   setup({ onEnd, initialOptions }: PluginBuild) {
     onEnd(async () => {

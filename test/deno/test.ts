@@ -1,5 +1,5 @@
 import { build, stop } from 'https://deno.land/x/esbuild@v0.18.4/mod.js'
-import GasPlugin from '../../mod.ts'
+import { GasPlugin } from '../../mod.ts'
 import httpFetch from 'https://deno.land/x/esbuild_plugin_http_fetch@v1.0.2/index.js'
 import { assertStringIncludes, assertEquals } from "https://deno.land/std@0.101.0/testing/asserts.ts";
 
@@ -20,7 +20,6 @@ function main1() {
 }
 function main2() {
 }
-"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
@@ -84,7 +83,6 @@ function main1() {
 }
 function main2() {
 }
-"use strict";
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;

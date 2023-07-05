@@ -16,8 +16,12 @@ jobs:
       - name: setup deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.x
-      - name: install dependencies
-        run: npm ci
-      - name: tests
-        run: npm run test
+          deno-version: v1.34.3
+      - name: build
+        run: deno run -A build.ts
+      - name: tests(node)
+        run: npm i && npm run test
+        working-directory: test/node
+      - name: tests(deno)
+        run: deno test -A --unstable
+        working-directory: test/deno
