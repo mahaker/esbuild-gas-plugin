@@ -18,10 +18,7 @@ jobs:
         with:
           deno-version: v1.34.3
       - name: build
-        run: |
-          rm -f deno.lock \
-          deno cache --reload mod.ts \
-          deno run -A build.ts
+        run: deno run -A build.ts
       - name: tests(node)
         run: deno task test:node
       - name: tests(deno)
