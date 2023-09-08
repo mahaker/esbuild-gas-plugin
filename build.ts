@@ -13,7 +13,7 @@ await build({
   declaration: "separate",
   package: {
     name: "esbuild-gas-plugin",
-    version: "0.6.0",
+    version: "0.7.0",
     description: "esbuild plugin for Google Apps Script.",
     license: "MIT",
     author: "Hideaki Matsunami <carbon0409@gmail.com>",
