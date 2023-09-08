@@ -39,6 +39,5 @@ await build({
   postBuild() {
     Deno.copyFileSync("LICENSE", "npm/LICENSE");
     Deno.copyFileSync("README.md", "npm/README.md");
-    Deno.copyFileSync("mod.ts", "npm/mod.ts"); // Deno support via NPM
   },
 });
