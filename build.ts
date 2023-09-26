@@ -27,12 +27,12 @@ await build({
   mappings: {
     "https://deno.land/x/esbuild@v0.18.4/mod.d.ts": {
       name: "esbuild",
-      version: "0.18.4",
+      version: "^0.18.4",
       peerDependency: false,
     },
     "https://esm.sh/gas-entry-generator@2.1.0": {
       name: "gas-entry-generator",
-      version: "2.1.0",
+      version: "^2.1.0",
       peerDependency: false,
     },
   },
