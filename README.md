@@ -13,6 +13,8 @@ This is inspired by [gas-webpack-plugin](https://github.com/fossamagna/gas-webpa
 npm install -D esbuild-gas-plugin
 // or
 yarn add -D esbuild-gas-plugin
+// or
+pnpm add -D esbuild-gas-plugin
 ```
 
 ## Usage
