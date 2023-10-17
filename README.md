@@ -13,6 +13,8 @@ This is inspired by [gas-webpack-plugin](https://github.com/fossamagna/gas-webpa
 npm install -D esbuild-gas-plugin
 // or
 yarn add -D esbuild-gas-plugin
+// or
+pnpm add -D esbuild-gas-plugin
 ```
 
 ## Usage
@@ -32,7 +34,10 @@ require('esbuild').build({
   bundle: true,
   outfile: 'dist/bundle.js',
   plugins: [GasPlugin]
-}).catch(() => process.exit(1))
+}).catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
 ```
 
 and
