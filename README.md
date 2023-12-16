@@ -55,10 +55,10 @@ import { GasPlugin } from 'npm:esbuild-gas-plugin@0.7.0'
 import httpFetch from 'https://deno.land/x/esbuild_plugin_http_fetch@v1.0.2/index.js'
 
 await build({
-    entryPoints: ['src/index.ts'],
-    bundle: true,
-    outfile: 'dist/bundle.js',
-    plugins: [httpFetch, GasPlugin ]
+  entryPoints: ['src/index.ts'],
+  bundle: true,
+  outfile: 'dist/bundle.js',
+  plugins: [httpFetch, GasPlugin ]
 })
 stop()
 ```
