@@ -27,6 +27,15 @@ async function deleteBanner(code: string, banner: string) {
   return _code
 }
 
+const addEntryPoint = async (jsBanner: string | undefined, code: string) => {
+  const gas = generate(code, { comment: true });
+  if (jsBanner === undefined) {
+    return `let global = this;\n${gas.entryPointFunctions}\n${code}`;
+  }
+  const bannerDeleted = await deleteBanner(code, jsBanner);
+  return `${jsBanner}\nlet global = this;\n${gas.entryPointFunctions}${bannerDeleted}`;
+}
+
 export const GasPlugin = {
   name: "gas-plugin",
   setup({ onEnd, initialOptions }: PluginBuild) {
@@ -39,20 +48,24 @@ export const GasPlugin = {
 
       const jsBanner = initialOptions.banner?.js;
       const code = await Deno.readTextFile(initialOptions.outfile);
-      const gas = generate(code, { comment: true });
-
-      if (jsBanner === undefined) {
-        await Deno.writeTextFile(
-          initialOptions.outfile,
-          `let global = this;\n${gas.entryPointFunctions}\n${code}`,
-        );
-      } else {
-        const bannerDeleted = await deleteBanner(code, jsBanner);
-        await Deno.writeTextFile(
-          initialOptions.outfile,
-          `${jsBanner}\nlet global = this;\n${gas.entryPointFunctions}${bannerDeleted}`,
-        );
-      }
+      await Deno.writeTextFile(
+        initialOptions.outfile,
+        await addEntryPoint(jsBanner, code),
+      );
     });
   },
 };
+
+export const MultiEntryPointsGasPlugin = ({ primeEntryPointJs }: { primeEntryPointJs: string }) => ({
+  name: "multi-entry-points-gas-plugin",
+  setup({ onEnd, initialOptions }: PluginBuild) {
+    onEnd(async () => {
+      const jsBanner = initialOptions.banner?.js;
+      const code = await Deno.readTextFile(primeEntryPointJs);
+      await Deno.writeTextFile(
+        primeEntryPointJs,
+        await addEntryPoint(jsBanner, code),
+      );
+    });
+  },
+});
