@@ -35,6 +35,11 @@ await build({
       version: "^2.1.0",
       peerDependency: false,
     },
+    "https://esm.sh/typescript@5.5.4": {
+      name: "typescript",
+      version: "^5.5.4",
+      peerDependency: false,
+    },
   },
   postBuild() {
     Deno.copyFileSync("LICENSE", "npm/LICENSE");

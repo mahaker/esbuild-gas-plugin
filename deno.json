@@ -2,7 +2,7 @@
   "lock": false,
   "tasks": {
     "build": "deno run -A build.ts",
-    "test:deno": "cd test/deno ; deno test -A --unstable",
+    "test:deno": "cd test/deno ; deno test -A",
     "test:node": "cd test/node ; npm i && npm run test"
   }
 }
