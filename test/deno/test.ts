@@ -10,7 +10,7 @@ Deno.test('declare global functions. banner#js is not defined', async () => {
       entryPoints: ['../fixtures/main.ts'],
       bundle: true,
       outfile: outfilePath,
-      plugins: [httpFetch, GasPlugin ]
+      plugins: [httpFetch, GasPlugin({ entryPointPath: '../fixtures/main.ts' }) ]
   })
   stop()
 
@@ -67,7 +67,7 @@ Deno.test('declare global functions. banner#js is defined', async () => {
  */
 `
       },
-      plugins: [httpFetch, GasPlugin ]
+      plugins: [httpFetch, GasPlugin({ entryPointPath: '../fixtures/main.ts' }) ]
   })
   stop()
 
@@ -122,7 +122,7 @@ Deno.test('Throws error if "outfile" is not defined', async () => {
       entryPoints: ['../fixtures/main.ts'],
       logLevel: 'silent', // To hide build error message.
       bundle: true,
-      plugins: [httpFetch, GasPlugin ]
+      plugins: [httpFetch, GasPlugin({ entryPointPath: '../fixtures/main.ts' }) ]
     }) 
   } catch(e) {
     assertStringIncludes(e.message, '"outfile" is required. Note that "write: false" is not available.')

@@ -11,7 +11,7 @@ test('declare global functions. banner#js is not defined', async t => {
     entryPoints: ['../fixtures/main.ts'],
     bundle: true,
     outfile: outfilePath,
-    plugins: [GasPlugin]
+    plugins: [ GasPlugin({ entryPointPath: '../fixtures/main.ts' }) ],
   })
 
   const outfile = fs.readFileSync(outfilePath, { encoding: 'utf8' })
@@ -68,7 +68,7 @@ test('declare global functions. banner#js is defined', async t => {
  */
 `
     },
-    plugins: [GasPlugin]
+    plugins: [ GasPlugin({ entryPointPath: '../fixtures/main.ts' }) ],
   })
 
   const outfile = fs.readFileSync(outfilePath, { encoding: 'utf8' })

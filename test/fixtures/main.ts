@@ -18,6 +18,10 @@ const main2 = () => {
   console.log(Utils.sub(10, 5))
 }
 
+const main3 = () => {
+  console.log('HOGE')
+}
+
 declare let global: any
 global.main1 = main1
 global.main2 = main2

@@ -18,37 +18,41 @@ export function getGasEntryPointFunctions(code: string): string {
  */
 // export function getEntryPointFunctions(code: string): void {
 //   const source = TS.createSourceFile("hoge.ts", code, TS.ScriptTarget.ES2015)
-export async function getEntryPointFunctions(path: string): Promise<void> {
+export async function getEntryPointFunctions(path: string): Promise<string[]> {
+  const GLOBAL_FN: string[] = []
+
   const code = await Deno.readTextFile(path)
   const source = TS.createSourceFile("hoge.ts", code, TS.ScriptTarget.ES2015)
 
   source.forEachChild(node => {
-    visitExpressionStatement(node)
+    visitExpressionStatement(node, GLOBAL_FN)
   });
+
+  return GLOBAL_FN
 }
 
-function visitExpressionStatement(node: TS.Node): void {
+function visitExpressionStatement(node: TS.Node, dist: string[]): void {
   if (!TS.isExpressionStatement(node)) return;
 
   node.forEachChild(expression => {
-    visitBinaryExpression(expression)
+    visitBinaryExpression(expression, dist)
   });
 }
 
-function visitBinaryExpression(node: TS.Node): void {
+function visitBinaryExpression(node: TS.Node, dist: string[]): void {
   if (!TS.isBinaryExpression(node)) return;
 
   node.forEachChild(expression => {
-    visitPropertyAccessExpression(expression)
+    visitPropertyAccessExpression(expression, dist)
   });
 }
 
-function visitPropertyAccessExpression(node: TS.Node): void {
+function visitPropertyAccessExpression(node: TS.Node, dist: string[]): void {
   if (
     TS.isPropertyAccessExpression(node)
     && TS.isIdentifier(node.expression)
     && node.expression.escapedText === "global"
   ) {
-    console.log("Global Assignment!!", node.name.escapedText)
+    dist.push(node.name.escapedText.toString())
   }
 }

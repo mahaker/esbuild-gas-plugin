@@ -26,13 +26,13 @@ async function deleteBanner(code: string, banner: string) {
   return _code
 }
 
-export const GasPlugin = {
+type GasPluginOptions = {
+  entryPointPath: string
+}
+
+export const GasPlugin = (options: GasPluginOptions) => ({
   name: "gas-plugin",
-  setup({ onLoad, onEnd, initialOptions }: PluginBuild) {
-    onLoad({ filter: /\.ts$/ }, async (args) => {
-      await getEntryPointFunctions(args.path)
-      return null;
-    }),
+  setup({ onEnd, initialOptions }: PluginBuild) {
     onEnd(async () => {
       if (initialOptions.outfile === undefined) {
         throw Error(
@@ -40,21 +40,29 @@ export const GasPlugin = {
         );
       }
 
+      if (!options || !options.entryPointPath) {
+        throw Error('"entryPointPath" is required.');
+      }
+
       const jsBanner = initialOptions.banner?.js;
       const code = await Deno.readTextFile(initialOptions.outfile);
+
+      const globalFns = await getEntryPointFunctions(options.entryPointPath)
+
+      const gasFns = globalFns.map(fn => `function ${fn}() {\n}`).join('\n')
 
       if (jsBanner === undefined) {
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `let global = this;\n${getGasEntryPointFunctions(code)}\n${code}`,
+          `let global = this;\n${gasFns}\n${code}`,
         );
       } else {
         const bannerDeleted = await deleteBanner(code, jsBanner);
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `${jsBanner}\nlet global = this;\n${getGasEntryPointFunctions(code)}${bannerDeleted}`,
+          `${jsBanner}\nlet global = this;\n${gasFns}${bannerDeleted}`,
         );
       }
     });
   },
-};
+});
