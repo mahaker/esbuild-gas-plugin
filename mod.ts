@@ -44,13 +44,13 @@ export const GasPlugin = {
       if (jsBanner === undefined) {
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `let global = this;\n${gas.entryPointFunctions}\n${code}`,
+          `var global = this;\n${gas.entryPointFunctions}\n${code}`,
         );
       } else {
         const bannerDeleted = await deleteBanner(code, jsBanner);
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `${jsBanner}\nlet global = this;\n${gas.entryPointFunctions}${bannerDeleted}`,
+          `${jsBanner}\nvar global = this;\n${gas.entryPointFunctions}${bannerDeleted}`,
         );
       }
     });
