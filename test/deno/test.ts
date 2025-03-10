@@ -15,7 +15,7 @@ Deno.test('declare global functions. banner#js is not defined', async () => {
   stop()
 
   const outfile = Deno.readTextFileSync(outfilePath)
-  const expected = `let global = this;
+  const expected = `var global = this;
 function main1() {
 }
 function main2() {
@@ -78,7 +78,7 @@ Deno.test('declare global functions. banner#js is defined', async () => {
  * This is banner
  */
 
-let global = this;
+var global = this;
 function main1() {
 }
 function main2() {

@@ -15,7 +15,7 @@ test('declare global functions. banner#js is not defined', async t => {
   })
 
   const outfile = fs.readFileSync(outfilePath, { encoding: 'utf8' })
-  const expected = `let global = this;
+  const expected = `var global = this;
 function main1() {
 }
 function main2() {
@@ -78,7 +78,7 @@ test('declare global functions. banner#js is defined', async t => {
  * This is banner
  */
 
-let global = this;
+var global = this;
 function main1() {
 }
 function main2() {
