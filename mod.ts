@@ -56,3 +56,5 @@ export const GasPlugin = {
     });
   },
 };
+
+export { generateGasEntryPoints } from "./lib.js";
