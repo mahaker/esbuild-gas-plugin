@@ -1,43 +1,42 @@
 /**
- * This is an arrow function.
- * @param {string} param1 - A parameter.
- * @returns {void}
+ * A function with full JSDoc already.
+ * @param {number} x - The first number.
+ * @param {string} y - The second string.
  */
-const arrowFunc = (param1) => {
-  console.log("I am an arrow function", param1);
-};
-
-// This function has no JSDoc
-const classicFunc = function() {
-  console.log("I am a classic function expression");
-};
+function fullyDocumented(x_val: number, y_val: string) {} // Using different param names in impl
 
 /**
- * A declared function.
- * With multiple lines in its description.
- * @param {number} value - The value.
+ * A function with partial JSDoc.
+ * @param name - The name. Note: no type in JSDoc, but type in signature.
  */
-function declaredFunc(value) {
-  console.log("I am a declared function", value);
-}
+function partiallyDocumented(name: string, age: number, city: string) {} // 'age' and 'city' params are missing from JSDoc
 
-const notAFunction = "hello"; // Should not be picked up
+// Function with type annotations but no JSDoc at all.
+function noJsDocTyped(value: boolean, settings: object) {}
+
+// Function with no type annotations and no JSDoc.
+function noJsDocNoTypes(p1, p2_val) {}
 
 /**
- * @summary A let-defined arrow function.
+ * An arrow function with types and partial JSDoc.
+ * @param {string} message - The message to log.
  */
-let letArrowFunc = () => {};
-
-var varFuncExpr = function() { /* No JSDoc here */ };
-
-/**
- * An exported function with JSDoc.
- * @param {object} data - Some data.
- * @returns {boolean} Success status.
- */
-export const exportedFunc = (data) => {
-    console.log("Exported func", data);
-    return true;
+export const arrowWithTypesAndPartialJsDoc = (message: string, count: number) => {
+  // 'count' is missing from JSDoc
+  console.log(message, count);
 };
 
-function anotherOneBitesTheDust() {} // No JSDoc
+// An arrow function with no types and no JSDoc
+const simpleArrowFunc = (a, b) => a + b;
+
+/**
+ * @summary A function with existing JSDoc but no @param tags.
+ * It has parameters in its signature.
+ */
+function jsDocNoParams(id: number, type: string) {}
+
+// Function with JSDoc @param for a non-existing param, and missing one for existing.
+/**
+ * @param {string} old_param - This parameter no longer exists.
+ */
+function mismatchedParams(current_param: number) {}

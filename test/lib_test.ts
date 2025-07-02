@@ -1,41 +1,65 @@
 import { assertEquals, assertRejects } from "https://deno.land/std@0.207.0/testing/asserts.ts";
 import { generateGasEntryPoints } from "../lib.js"; // Corrected path
 
-Deno.test("generateGasEntryPoints should correctly parse functions and their JSDoc comments", async () => {
+Deno.test("generateGasEntryPoints should correctly parse, augment JSDoc, and format signatures", async () => {
   const expectedOutput = `/**
- * This is an arrow function.
- * @param {string} param1 - A parameter.
- * @returns {void}
+ * A function with full JSDoc already.
+ * @param {number} x - The first number.
+ * @param {string} y - The second string.
+ * @param {number} x_val
+ * @param {string} y_val
  */
-function arrowFunc() {}
-
-function classicFunc() {}
+function fullyDocumented(x_val, y_val) {}
 
 /**
- * A declared function.
- * With multiple lines in its description.
- * @param {number} value - The value.
+ * A function with partial JSDoc.
+ * @param name - The name. Note: no type in JSDoc, but type in signature.
+ * @param {number} age
+ * @param {string} city
  */
-function declaredFunc() {}
+function partiallyDocumented(name, age, city) {}
 
 /**
- * @summary A let-defined arrow function.
+ * @param {boolean} value
+ * @param {object} settings
  */
-function letArrowFunc() {}
-
-function varFuncExpr() {}
+function noJsDocTyped(value, settings) {}
 
 /**
- * An exported function with JSDoc.
- * @param {object} data - Some data.
- * @returns {boolean} Success status.
+ * @param {any} p1
+ * @param {any} p2_val
  */
-function exportedFunc() {}
+function noJsDocNoTypes(p1, p2_val) {}
 
-function anotherOneBitesTheDust() {}`.trim(); // Use .trim() to remove leading/trailing whitespace from template literal if any
+/**
+ * An arrow function with types and partial JSDoc.
+ * @param {string} message - The message to log.
+ * @param {number} count
+ */
+function arrowWithTypesAndPartialJsDoc(message, count) {}
+
+/**
+ * @param {any} a
+ * @param {any} b
+ */
+function simpleArrowFunc(a, b) {}
+
+/**
+ * @summary A function with existing JSDoc but no @param tags.
+ * It has parameters in its signature.
+ * @param {number} id
+ * @param {string} type
+ */
+function jsDocNoParams(id, type) {}
+
+/**
+ * @param {string} old_param - This parameter no longer exists.
+ * @param {number} current_param
+ */
+function mismatchedParams(current_param) {}`.trim();
 
   const result = await generateGasEntryPoints("test/fixtures/functions.js");
-  assertEquals(result.trim(), expectedOutput); // Also trim result just in case
+  assertEquals(result.trim(), expectedOutput);
 });
 
 Deno.test("generateGasEntryPoints should throw for non-existent file", async () => {
@@ -43,7 +67,6 @@ Deno.test("generateGasEntryPoints should throw for non-existent file", async () 
     async () => {
       await generateGasEntryPoints("test/fixtures/non_existent_file.js");
     },
-    Error, // Deno.errors.NotFound, but Error is more general
-    // No specific message check here, as it might vary slightly by Deno version or OS
+    Error
   );
 });
