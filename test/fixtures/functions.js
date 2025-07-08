@@ -1,42 +1,67 @@
-/**
- * A function with full JSDoc already.
- * @param {number} x - The first number.
- * @param {string} y - The second string.
- */
-function fullyDocumented(x_val: number, y_val: string) {} // Using different param names in impl
+// Fixture for testing global assignment logic
 
 /**
- * A function with partial JSDoc.
- * @param name - The name. Note: no type in JSDoc, but type in signature.
+ * @summary A locally defined function.
+ * @param {number} a - First parameter.
  */
-function partiallyDocumented(name: string, age: number, city: string) {} // 'age' and 'city' params are missing from JSDoc
-
-// Function with type annotations but no JSDoc at all.
-function noJsDocTyped(value: boolean, settings: object) {}
-
-// Function with no type annotations and no JSDoc.
-function noJsDocNoTypes(p1, p2_val) {}
-
-/**
- * An arrow function with types and partial JSDoc.
- * @param {string} message - The message to log.
- */
-export const arrowWithTypesAndPartialJsDoc = (message: string, count: number) => {
-  // 'count' is missing from JSDoc
-  console.log(message, count);
+const localFunc = (a: number) => {
+  console.log(a);
 };
 
-// An arrow function with no types and no JSDoc
-const simpleArrowFunc = (a, b) => a + b;
+/**
+ * @summary Another local function, will be assigned to global with a different name.
+ * @param {string} b - Second parameter.
+ */
+function myOriginalFunctionName(b: string): void {
+  // JSDoc for b will be generated
+}
+
+// This function is NOT assigned to global
+const notAGlobalFunction = (x: number, y: number) => {
+  return x + y;
+};
 
 /**
- * @summary A function with existing JSDoc but no @param tags.
- * It has parameters in its signature.
+ * @summary This JSDoc is for the assignment itself.
+ * The function 'localFunc' (which has its own JSDoc) is assigned to global.hoge
  */
-function jsDocNoParams(id: number, type: string) {}
+global.hoge = localFunc;
 
-// Function with JSDoc @param for a non-existing param, and missing one for existing.
+// Assigning myOriginalFunctionName to global.anotherEntryPoint
+// No JSDoc on this assignment statement itself.
+global.anotherEntryPoint = myOriginalFunctionName;
+
 /**
- * @param {string} old_param - This parameter no longer exists.
+ * @summary This is a direct assignment of an anonymous function to a global.
+ * @param {boolean} c - A boolean parameter.
  */
-function mismatchedParams(current_param: number) {}
+global.directAssignment = (c: boolean) => {
+  // JSDoc for c will be generated
+  return !c;
+};
+
+// Assignment to globalThis
+globalThis.onGlobalThis = (d: string, e: any) => {
+    // d and e params will be generated
+    console.log(d,e);
+};
+
+// Assignment to window
+/**
+ * @summary Assigned to window object.
+ */
+window.onWindow = function(f: number) {
+    // f param will be generated
+    console.log(f);
+};
+
+// A function that is defined but never assigned globally
+function purelyLocal(p1: string) {
+    console.log(p1);
+}
+
+// Assigning an identifier that doesn't point to a defined function (should be ignored)
+global.pointsToNothing = undefinedIdentifier;
+
+// Assigning a non-function value (should be ignored)
+global.notAFunction = "hello";

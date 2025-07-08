@@ -1,65 +1,55 @@
 import { assertEquals, assertRejects } from "https://deno.land/std@0.207.0/testing/asserts.ts";
 import { generateGasEntryPoints } from "../lib.js"; // Corrected path
 
-Deno.test("generateGasEntryPoints should correctly parse, augment JSDoc, and format signatures", async () => {
+Deno.test("generateGasEntryPoints should extract only globally assigned functions with correct JSDoc and signatures", async () => {
   const expectedOutput = `/**
- * A function with full JSDoc already.
- * @param {number} x - The first number.
- * @param {string} y - The second string.
- * @param {number} x_val
- * @param {string} y_val
+ * @summary This JSDoc is for the assignment itself.
+ * The function 'localFunc' (which has its own JSDoc) is assigned to global.hoge
+ * @param {number} a
  */
-function fullyDocumented(x_val, y_val) {}
+function hoge(a) {}
 
 /**
- * A function with partial JSDoc.
- * @param name - The name. Note: no type in JSDoc, but type in signature.
- * @param {number} age
- * @param {string} city
+ * @summary Another local function, will be assigned to global with a different name.
+ * @param {string} b - Second parameter.
  */
-function partiallyDocumented(name, age, city) {}
+function anotherEntryPoint(b) {}
 
 /**
- * @param {boolean} value
- * @param {object} settings
+ * @summary This is a direct assignment of an anonymous function to a global.
+ * @param {boolean} c - A boolean parameter.
  */
-function noJsDocTyped(value, settings) {}
+function directAssignment(c) {}
 
 /**
- * @param {any} p1
- * @param {any} p2_val
+ * @param {string} d
+ * @param {any} e
  */
-function noJsDocNoTypes(p1, p2_val) {}
+function onGlobalThis(d, e) {}
 
 /**
- * An arrow function with types and partial JSDoc.
- * @param {string} message - The message to log.
- * @param {number} count
+ * @summary Assigned to window object.
+ * @param {number} f
  */
-function arrowWithTypesAndPartialJsDoc(message, count) {}
-
-/**
- * @param {any} a
- * @param {any} b
- */
-function simpleArrowFunc(a, b) {}
-
-/**
- * @summary A function with existing JSDoc but no @param tags.
- * It has parameters in its signature.
- * @param {number} id
- * @param {string} type
- */
-function jsDocNoParams(id, type) {}
-
-/**
- * @param {string} old_param - This parameter no longer exists.
- * @param {number} current_param
- */
-function mismatchedParams(current_param) {}`.trim();
+function onWindow(f) {}`.trim();
+  // Note: purelyLocal, notAGlobalFunction, pointsToNothing, notAFunction from fixture are NOT included.
 
   const result = await generateGasEntryPoints("test/fixtures/functions.js");
   assertEquals(result.trim(), expectedOutput);
+});
+
+Deno.test("generateGasEntryPoints should return empty for no global assignments", async () => {
+  // Create a temporary file with functions but no global assignments
+  const tempFilePath = await Deno.makeTempFile({ prefix: "test_no_globals", suffix: ".js" });
+  try {
+    await Deno.writeTextFile(tempFilePath,
+      "const localFunc = () => {};\\nfunction anotherLocal() {}"
+    );
+    const result = await generateGasEntryPoints(tempFilePath);
+    assertEquals(result.trim(), "");
+  } finally {
+    await Deno.remove(tempFilePath);
+  }
 });
 
 Deno.test("generateGasEntryPoints should throw for non-existent file", async () => {
