@@ -16,10 +16,14 @@ Deno.test('declare global functions. banner#js is not defined', async () => {
 
   const outfile = Deno.readTextFileSync(outfilePath)
   const expected = `var global = this;
-function main1() {
-}
-function main2() {
-}
+/**
+ * A sample function
+ * @param name Name to greet
+ * @customfunction
+ */
+function main1(name) {}
+
+function main2() {}
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
@@ -33,8 +37,8 @@ function main2() {
   var greet = (name) => {
     console.log("Hello " + name);
   };
-  var main1 = () => {
-    greet("mahaker");
+  var main1 = (name) => {
+    greet("Hello " + name);
     console.log(util_default.add(2, 3));
     console.log(util_default.sub(0, 5));
   };
@@ -79,10 +83,14 @@ Deno.test('declare global functions. banner#js is defined', async () => {
  */
 
 var global = this;
-function main1() {
-}
-function main2() {
-}
+/**
+ * A sample function
+ * @param name Name to greet
+ * @customfunction
+ */
+function main1(name) {}
+
+function main2() {}
 (() => {
   // ../fixtures/util.ts
   var add = (n1, n2) => n1 + n2;
@@ -96,8 +104,8 @@ function main2() {
   var greet = (name) => {
     console.log("Hello " + name);
   };
-  var main1 = () => {
-    greet("mahaker");
+  var main1 = (name) => {
+    greet("Hello " + name);
     console.log(util_default.add(2, 3));
     console.log(util_default.sub(0, 5));
   };
@@ -124,7 +132,7 @@ Deno.test('Throws error if "outfile" is not defined', async () => {
       bundle: true,
       plugins: [httpFetch, GasPlugin ]
     }) 
-  } catch(e) {
+  } catch(e: any) {
     assertStringIncludes(e.message, '"outfile" is required. Note that "write: false" is not available.')
   } finally {
     stop()

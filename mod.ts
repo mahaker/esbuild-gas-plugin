@@ -2,6 +2,7 @@ import type { PluginBuild } from "https://deno.land/x/esbuild@v0.18.4/mod.d.ts";
 import { StringReader, readLines } from "https://deno.land/std@0.190.0/io/mod.ts";
 // @deno-types="./generate.d.ts"
 import { generate } from "https://esm.sh/gas-entry-generator@2.1.0";
+import { generateGlobalFunctionStubs } from "./lib.ts";
 
 async function countLines(s: string) {
   const reader = new StringReader(s)
@@ -37,20 +38,28 @@ export const GasPlugin = {
         );
       }
 
+      if (
+        initialOptions.entryPoints === undefined
+        || !Array.isArray(initialOptions.entryPoints)
+        || !initialOptions.entryPoints.every(_ => typeof _ === "string")
+      ) {
+        throw new Error('"entryPoints" is required and must be an array of strings.');
+      }
+
       const jsBanner = initialOptions.banner?.js;
       const code = await Deno.readTextFile(initialOptions.outfile);
-      const gas = generate(code, { comment: true });
+      const gas = generateGlobalFunctionStubs(initialOptions.entryPoints[0]);
 
       if (jsBanner === undefined) {
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `var global = this;\n${gas.entryPointFunctions}\n${code}`,
+          `var global = this;\n${gas}\n${code}`,
         );
       } else {
         const bannerDeleted = await deleteBanner(code, jsBanner);
         await Deno.writeTextFile(
           initialOptions.outfile,
-          `${jsBanner}\nvar global = this;\n${gas.entryPointFunctions}${bannerDeleted}`,
+          `${jsBanner}\nvar global = this;\n${gas}${bannerDeleted}`,
         );
       }
     });
