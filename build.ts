@@ -30,11 +30,6 @@ await build({
       version: "^0.18.4",
       peerDependency: false,
     },
-    "https://esm.sh/gas-entry-generator@2.1.0": {
-      name: "gas-entry-generator",
-      version: "^2.1.0",
-      peerDependency: false,
-    },
     "https://esm.sh/typescript@5.1.6": {
       name: "typescript",
       version: "^5.1.6",
