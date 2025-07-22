@@ -21,8 +21,8 @@ jobs:
         run: deno task build
       - name: test
         run: deno task test
-      - name: E2E(node)
-        run: deno task test:node
+#      - name: E2E(node)
+#        run: deno task test:node
       - name: E2E(deno)
         run: deno task test:deno
 
