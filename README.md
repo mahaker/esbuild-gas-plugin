@@ -30,7 +30,7 @@ A simple example can be found in [here](https://github.com/mahaker/openapi-gas-e
 const { GasPlugin } = require('esbuild-gas-plugin');
 
 require('esbuild').build({
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/index.ts'], // Must be an array of strings(Applies to the first element only)
   bundle: true,
   outfile: 'dist/bundle.js',
   plugins: [GasPlugin]
@@ -55,7 +55,7 @@ import { GasPlugin } from 'npm:esbuild-gas-plugin@0.7.0'
 import httpFetch from 'https://deno.land/x/esbuild_plugin_http_fetch@v1.0.2/index.js'
 
 await build({
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/index.ts'], // Must be an array of strings(Applies to the first element only)
   bundle: true,
   outfile: 'dist/bundle.js',
   plugins: [httpFetch, GasPlugin ]
