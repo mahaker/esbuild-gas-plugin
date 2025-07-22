@@ -18,9 +18,11 @@ jobs:
         with:
           deno-version: v2.2.3
       - name: build
-        run: deno run -A build.ts
-      - name: tests(node)
+        run: deno task build
+      - name: test
+        run: deno task test
+      - name: E2E(node)
         run: deno task test:node
-      - name: tests(deno)
+      - name: E2E(deno)
         run: deno task test:deno
 
